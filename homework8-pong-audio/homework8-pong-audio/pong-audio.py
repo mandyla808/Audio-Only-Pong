@@ -5,16 +5,16 @@
     HOW TO SETUP:
     Start the python game: >python3 pong-audio.py
 
-    HOW TO PLAY: 
-    Well.. use your auditory interface. 
+    HOW TO PLAY:
+    Well.. use your auditory interface.
     p.s.: Player 1 controls the left paddle: UP (W) DOWN (S) <- change this to auditory interface
           Player 2controls the right paddle: UP (O) DOWN (L)
-    
-    HOW TO QUIT: 
-    Say "quit". 
-    
+
+    HOW TO QUIT:
+    Say "quit".
+
     HOW TO INSTALL:
-    Follow class wiki. 
+    Follow class wiki.
     p.s.: this needs 10x10 image in the same directory: "white_square.png".
 """
 #native imports
@@ -42,6 +42,7 @@ import wave
 
 quit = False
 debug = 1
+currPitch = -1
 
 # pitch & volume detection
 # -------------------------------------#
@@ -65,9 +66,157 @@ p2_score = 0
 
 #play some fun sounds?
 def hit():
-    playsound('hit.wav', False)
+    playsound('SoundFiles/hit.wav', False)
 
 hit()
+
+def whack():
+    playsound('SoundFiles/whack.wav', False)
+
+def blip():
+    playsound('SoundFiles/blip.wav', False)
+
+#play sound as ball moves across screen
+def pitch_ball_center(y, height, location):
+    if y > height/12 * 11 and location != 11:
+        playsound('SoundFiles/6-A4.wav', False)
+        return 11
+    elif height/12 * 11 > y > height/12 *10 and location != 10:
+        playsound('SoundFiles/7-A#4.wav', False)
+        return 10
+    elif height/12 *10 > y > (height/12 *9) and location != 9:
+        playsound('SoundFiles/8-B4.wav', False)
+        return 9
+    elif (height/12 *9) > y > (height/12 *8) and location != 8:
+        playsound('SoundFiles/9-C5.wav', False)
+        return 8
+    elif (height/12 *8) > y > (height/12 *7) and location != 7:
+        playsound('SoundFiles/10-C#5.wav', False)
+        return 7
+    elif (height/12 *7) > y > (height/12 *6) and location != 6:
+        playsound('SoundFiles/11-D5.wav', False)
+        return 6
+    elif (height/12 *6) > y > (height/12 *5) and location != 5:
+        playsound('SoundFiles/12-D#5.wav', False)
+        return 5
+    elif (height/12 *5) > y > (height/12 *4) and location != 4:
+        playsound('SoundFiles/13-E5.wav', False)
+        return 4
+    elif (height/12 *4) > y > (height/12 *3) and location != 3:
+        playsound('SoundFiles/14-F5.wav', False)
+        return 3
+    elif (height/12 *3) > y > (height/12 *2) and location != 2:
+        playsound('SoundFiles/15-F#5.wav', False)
+        return 2
+    elif (height/12 *2) > y > (height/12 *1) and location != 1:
+        playsound('SoundFiles/16-G5.wav', False)
+        return 1
+    elif (height/12 *1) > y and location != 0:
+        playsound('SoundFiles/17-G#5.wav', False)
+        return 0
+
+def pitch_ball_right(y, height, location):
+    if y > height/12 * 11 and location != 11:
+        playsound('SoundFiles/6-A4-Right.wav', False)
+        return 11
+    elif height/12 * 11 > y > height/12 *10 and location != 10:
+        playsound('SoundFiles/7-A#4-Right.wav', False)
+        return 10
+    elif height/12 *10 > y > (height/12 *9) and location != 9:
+        playsound('SoundFiles/8-B4-Right.wav', False)
+        return 9
+    elif (height/12 *9) > y > (height/12 *8) and location != 8:
+        playsound('SoundFiles/9-C5-Right.wav', False)
+        return 8
+    elif (height/12 *8) > y > (height/12 *7) and location != 7:
+        playsound('SoundFiles/10-C#5-Right.wav', False)
+        return 7
+    elif (height/12 *7) > y > (height/12 *6) and location != 6:
+        playsound('SoundFiles/11-D5-Right.wav', False)
+        return 6
+    elif (height/12 *6) > y > (height/12 *5) and location != 5:
+        playsound('SoundFiles/12-D#5-Right.wav', False)
+        return 5
+    elif (height/12 *5) > y > (height/12 *4) and location != 4:
+        playsound('SoundFiles/13-E5-Right.wav', False)
+        return 4
+    elif (height/12 *4) > y > (height/12 *3) and location != 3:
+        playsound('SoundFiles/14-F5-Right.wav', False)
+        return 3
+    elif (height/12 *3) > y > (height/12 *2) and location != 2:
+        playsound('SoundFiles/15-F#5-Right.wav', False)
+        return 2
+    elif (height/12 *2) > y > (height/12 *1) and location != 1:
+        playsound('SoundFiles/16-G5-Right.wav', False)
+        return 1
+    elif (height/12 *1) > y and location != 0:
+        playsound('SoundFiles/17-G#5-Right.wav', False)
+        return 0
+
+def pitch_ball_left(y, height, location):
+    if y > height/12 * 11 and location != 11:
+        playsound('SoundFiles/6-A4-Left.wav', False)
+        return 11
+    elif height/12 * 11 > y > height/12 *10 and location != 10:
+        playsound('SoundFiles/7-A#4-Left.wav', False)
+        return 10
+    elif height/12 *10 > y > (height/12 *9) and location != 9:
+        playsound('SoundFiles/8-B4-Left.wav', False)
+        return 9
+    elif (height/12 *9) > y > (height/12 *8) and location != 8:
+        playsound('SoundFiles/9-C5-Left.wav', False)
+        return 8
+    elif (height/12 *8) > y > (height/12 *7) and location != 7:
+        playsound('SoundFiles/10-C#5-Left.wav', False)
+        return 7
+    elif (height/12 *7) > y > (height/12 *6) and location != 6:
+        playsound('SoundFiles/11-D5-Left.wav', False)
+        return 6
+    elif (height/12 *6) > y > (height/12 *5) and location != 5:
+        playsound('SoundFiles/12-D#5-Left.wav', False)
+        return 5
+    elif (height/12 *5) > y > (height/12 *4) and location != 4:
+        playsound('SoundFiles/13-E5-Left.wav', False)
+        return 4
+    elif (height/12 *4) > y > (height/12 *3) and location != 3:
+        playsound('SoundFiles/14-F5-Left.wav', False)
+        return 3
+    elif (height/12 *3) > y > (height/12 *2) and location != 2:
+        playsound('SoundFiles/15-F#5-Left.wav', False)
+        return 2
+    elif (height/12 *2) > y > (height/12 *1) and location != 1:
+        playsound('SoundFiles/16-G5-Left.wav', False)
+        return 1
+    elif (height/12 *1) > y and location != 0:
+        playsound('SoundFiles/17-G#5-Left.wav', False)
+        return 0
+
+def match_pitch(pitch, height):
+    if pitch < 225: #'A'
+        return height/12 * 11.5
+    elif 225 < pitch < 235: #'A#'
+        return height/12 * 10.5
+    elif 235 < pitch < 250: #'B'
+        return height/12 * 9.5
+    elif 250 < pitch < 265: #'C'
+        return height/12 * 8.5
+    elif 265 < pitch < 285: #'C#'
+        return height/12 * 7.5
+    elif 285 < pitch < 305: #'D'
+        return height/12 * 6.5
+    elif 305 < pitch < 320: #'D#'
+        return height/12 * 5.5
+    elif 320 < pitch < 340: #'E'
+        return height/12 * 4.5
+    elif 340 < pitch < 360: #'F'
+        return height/12 * 3.5
+    elif 360 < pitch < 385: #'F#'
+        return height/12 * 2.5
+    elif 385 < pitch < 405: #'G'
+        return height/12 * 1.5
+    elif 405 < pitch: #'G#'
+        return height/12 * 0.5
+
 # speech recognition functions using google api
 # -------------------------------------#
 def listen_to_speech():
@@ -96,6 +245,7 @@ def listen_to_speech():
 
 # pitch & volume detection
 # -------------------------------------#
+
 def sense_microphone():
     global quit
     while not quit:
@@ -111,9 +261,13 @@ def sense_microphone():
         # it has six decimal numbers.
         volume = "{:.6f}".format(volume)
 
-        # uncomment these lines if you want pitch or volume
-        # print("p"+str(pitch))
-        # print("v"+str(volume))
+        # min volume threshold
+        if volume > "0.0001":
+            global currPitch
+            currPitch = pitch
+            # print("p"+str(pitch))
+            # print("v"+str(volume))
+
 # -------------------------------------#
 
 class Ball(object):
@@ -164,6 +318,7 @@ class Model(object):
         # STATE VARS
         self.paused = False
         self.i = 0  # "frame count" for debug
+        self.ball_location = -1
 
     def reset_ball(self, who_scored):
         """Place the ball anew on the loser's side."""
@@ -190,10 +345,12 @@ class Model(object):
         # bounces. if -- bounce on top of screen. elif -- bounce on bottom.
         b = self.ball
         if b.y - b.TO_SIDE < 0:
+            whack()
             illegal_movement = 0 - (b.y - b.TO_SIDE)
             b.y = 0 + b.TO_SIDE + illegal_movement
             b.vec_y *= -1
         elif b.y + b.TO_SIDE > self.HEIGHT:
+            whack()
             illegal_movement = self.HEIGHT - (b.y + b.TO_SIDE)
             b.y = self.HEIGHT - b.TO_SIDE + illegal_movement
             b.vec_y *= -1
@@ -205,22 +362,24 @@ class Model(object):
         if b.x + b.TO_SIDE < 0:  # leave on left
             self.reset_ball(1)
             p2_score+=1
+            hit()
         elif b.x - b.TO_SIDE > self.WIDTH:  # leave on right
             p1_score+=1
             self.reset_ball(0)
+            hit()
 
-    def check_if_paddled(self): 
+    def check_if_paddled(self):
         """Called by update_ball to recalc. a ball hit with a player paddle."""
         b = self.ball
         p0, p1 = self.players[0], self.players[1]
-        angle = math.acos(b.vec_y)  
-        factor = random.randint(5, 15)  
+        angle = math.acos(b.vec_y)
+        factor = random.randint(5, 15)
         cross0 = (b.x < p0.x + 2*b.TO_SIDE) and (b.x_old >= p0.x + 2*b.TO_SIDE)
         cross1 = (b.x > p1.x - 2*b.TO_SIDE) and (b.x_old <= p1.x - 2*b.TO_SIDE)
         if cross0 and -25 < b.y - p0.y < 25:
             #playhit = threading.Thread(target=hit(), args=())
             #playhit.start()
-            hit()
+            blip()
             if debug: print("hit at "+str(self.i))
             illegal_movement = p0.x + 2*b.TO_SIDE - b.x
             b.x = p0.x + 2*b.TO_SIDE + illegal_movement
@@ -230,7 +389,7 @@ class Model(object):
         elif cross1 and -25 < b.y - p1.y < 25:
             #playhit = threading.Thread(target=hit(), args=())
             #playhit.start()
-            hit()
+            blip()
             if debug: print("hit at "+str(self.i))
             illegal_movement = p1.x - 2*b.TO_SIDE - b.x
             b.x = p1.x - 2*b.TO_SIDE + illegal_movement
@@ -252,12 +411,19 @@ class Model(object):
         self.i += 1  # "debug"
         b = self.ball
         b.x_old, b.y_old = b.x, b.y
-        b.x += b.vec_x * self.ball_speed 
+        b.x += b.vec_x * self.ball_speed
         b.y += b.vec_y * self.ball_speed
         self.check_if_oob_top_bottom()  # oob: out of bounds
         self.check_if_oob_sides()
         self.check_if_paddled()
 
+        #play sound to indicate ball location
+        if b.x < self.WIDTH/3:
+            self.ball_location = pitch_ball_left(b.y, self.HEIGHT, self.ball_location)
+        elif b.x < self.WIDTH/3*2:
+            self.ball_location = pitch_ball_center(b.y, self.HEIGHT, self.ball_location)
+        elif b.x < self.WIDTH/3*3:
+            self.ball_location = pitch_ball_right(b.y, self.HEIGHT, self.ball_location)
 
     def update(self):
         """Work through all pressed keys, update and call update_ball."""
@@ -275,17 +441,23 @@ class Model(object):
         # player 1: the user controls the left player by W/S but you should change it to VOICE input
         p1 = self.players[0]
         p1.last_movements.pop(0)
-        if p1.up_key in pks and p1.down_key not in pks: #change this to voice input
-            p1.y -= self.speed
-            p1.last_movements.append(-self.speed)
-        elif p1.up_key not in pks and p1.down_key in pks: #change this to voice input
-            p1.y += self.speed
-            p1.last_movements.append(+self.speed)
-        else:
-            # notice how we popped from _place_ zero,
-            # but append _a number_ zero here. it's not the same.
+        pitch = currPitch
+        if pitch > 0:
+            p1.y = match_pitch(pitch, self.HEIGHT)
             p1.last_movements.append(0)
-           
+        else:
+            p1.last_movements.append(0)
+        # if p1.up_key in pks and p1.down_key not in pks and 20 < p1.y: #change this to voice input
+        #     p1.y -= self.speed
+        #     p1.last_movements.append(-self.speed)
+        # elif p1.up_key not in pks and p1.down_key in pks and p1.y < self.HEIGHT-20: #change this to voice input
+        #     p1.y += self.speed
+        #     p1.last_movements.append(+self.speed)
+        # else:
+        #     # notice how we popped from _place_ zero,
+        #     # but append _a number_ zero here. it's not the same.
+        #     p1.last_movements.append(0)
+
         # ----------------- DO NOT CHANGE BELOW ----------------
         # player 2: the other user controls the right player by O/L
         p2 = self.players[1]
@@ -407,5 +579,3 @@ microphone_thread.start()
 if debug: print("init window...")
 if debug: print("done! init app...")
 pyglet.app.run()
-
-
